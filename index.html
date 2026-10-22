@@ -1,22 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Water Quest</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eaf6f7">
+  <title>Water Quest — Keep the Household Alive</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div class="container">
-    <h1>Water Quest</h1>
-    <p class="game-instructions">Collect 20 items to complete the game!</p>
-    <div class="stats">
-      <p>Cans Collected: <span id="current-cans">0</span></p>
-      <p>Time Left: <span id="timer">30</span>s</p>
-    </div>
-    <div id="achievements" class="achievement"></div>
-    <div class="game-grid"></div>
-    <button id="start-game">Start Game</button>
+    <header class="topbar">
+      <img class="brand-logo" src="img/cw_logo_horizontal.png" alt="charity: water">
+      <div class="top-controls">
+        <span class="edition-label">A SURVIVAL CHALLENGE</span>
+        <div class="top-clock"><span aria-hidden="true">◷</span><span id="timer">00:00</span></div>
+        <button class="pause-button" id="pause-game" type="button" aria-label="Pause game" disabled><span id="pause-symbol" aria-hidden="true">Ⅱ</span><span class="pause-label" id="pause-label">Pause</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="game-title">
+        <p class="eyebrow">EVERY TRIP COUNTS</p>
+        <h1 id="game-title">Water Quest</h1>
+        <p class="game-instructions">Keep your household hydrated and healthy. Choose a supply run before either bar runs out.</p>
+      </section>
+
+      <section class="journey-scene" id="journey-scene" aria-label="A traveler walks between home, the lake, and the clinic">
+        <div class="scene-sun" aria-hidden="true"></div>
+        <div class="scene-cloud cloud-one" aria-hidden="true"></div>
+        <div class="scene-cloud cloud-two" aria-hidden="true"></div>
+        <div class="destination lake-destination" id="lake-location">
+          <div class="lake-art" aria-hidden="true"><span class="lake-sun"></span><span class="lake-water"></span><span class="lake-reeds">♧</span></div>
+          <span class="destination-name">THE LAKE</span>
+        </div>
+        <div class="destination clinic-destination" id="clinic-location">
+          <div class="clinic-art" aria-hidden="true"><span class="clinic-cross">＋</span><span class="clinic-door"></span><span class="clinic-window"></span></div>
+          <span class="destination-name">THE CLINIC</span>
+        </div>
+        <div class="home-destination" id="home-location">
+          <span class="home-label">HOME</span>
+          <svg class="house-art" viewBox="0 0 160 145" role="img" aria-label="A colorful family home">
+            <ellipse cx="80" cy="136" rx="65" ry="7" fill="#c2dfcb"/>
+            <path d="M20 69 80 20l60 49v7H20z" fill="#e97557"/>
+            <path d="M31 70 80 30l49 40v58H31z" fill="#fff3d4"/>
+            <path d="M23 70 80 22l57 47" fill="none" stroke="#bd5947" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M47 84h22v23H47z" fill="#8bd1cb" stroke="#fff" stroke-width="4"/>
+            <path d="M91 84h22v23H91z" fill="#8bd1cb" stroke="#fff" stroke-width="4"/>
+            <path d="M68 128V99a12 12 0 0 1 24 0v29" fill="#2e9df7"/>
+            <circle cx="86" cy="113" r="1.5" fill="#ffc907"/>
+            <path d="M18 128h124" stroke="#78b77c" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <span class="home-heart" aria-hidden="true">♥</span>
+        </div>
+        <div class="travel-route" aria-hidden="true"><span></span></div>
+        <div class="traveler" id="traveler" aria-label="Traveler at home">
+          <span class="traveler-bundle" id="traveler-bundle" aria-hidden="true"></span>
+          <span class="traveler-head" aria-hidden="true"></span>
+          <span class="traveler-body" aria-hidden="true"></span>
+          <span class="traveler-arm" aria-hidden="true"></span>
+          <span class="traveler-leg leg-one" aria-hidden="true"></span>
+          <span class="traveler-leg leg-two" aria-hidden="true"></span>
+        </div>
+        <div class="scene-caption" id="scene-caption" aria-live="polite">A safe home is worth every step</div>
+      </section>
+
+      <section class="dashboard" aria-label="Household status">
+        <div class="dashboard-heading">
+          <div>
+            <span class="section-kicker">YOUR HOUSEHOLD</span>
+            <h2>Holding on <span aria-hidden="true">🏠</span></h2>
+          </div>
+        </div>
+
+        <div class="meter-list">
+          <div class="meter-card">
+            <div class="meter-label"><span class="meter-icon hydration-icon" aria-hidden="true">💧</span><span>Hydration</span><strong id="hydration-value">70%</strong></div>
+            <div class="meter-track" role="progressbar" aria-label="Hydration" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><span class="meter-fill hydration-fill" id="hydration-bar"></span></div>
+            <p class="meter-note">Water keeps the family going</p>
+          </div>
+          <div class="meter-card">
+            <div class="meter-label"><span class="meter-icon health-icon" aria-hidden="true">＋</span><span>Health</span><strong id="health-value">75%</strong></div>
+            <div class="meter-track" role="progressbar" aria-label="Health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75"><span class="meter-fill health-fill" id="health-bar"></span></div>
+            <p class="meter-note">Medicine protects their health</p>
+          </div>
+        </div>
+
+        <div class="trip-status" aria-live="polite">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="trip-status">Ready at home</span>
+        </div>
+      </section>
+
+      <section class="choices" aria-labelledby="choices-title">
+        <h2 class="visually-hidden" id="choices-title">Choose a supply run</h2>
+        <div class="dock-score"><span aria-hidden="true">✦</span><strong id="score">0</strong><small>SCORE</small></div>
+        <div class="trip-options">
+          <button class="trip-card water-trip" id="large-trip" type="button" data-trip="large" disabled>
+            <span class="trip-emoji" aria-hidden="true">🪣</span>
+            <span class="trip-copy"><strong>Large water trip</strong><small>Big refill · longer journey</small></span>
+            <span class="trip-reward"><b>+3</b><small>PTS</small></span>
+            <span class="trip-time">◷ <span>8 sec</span></span>
+          </button>
+          <button class="trip-card water-trip" id="small-trip" type="button" data-trip="small" disabled>
+            <span class="trip-emoji bottle-icon" aria-hidden="true">🧴</span>
+            <span class="trip-copy"><strong>Small water trip</strong><small>Quick refill · short journey</small></span>
+            <span class="trip-reward"><b>+1</b><small>PT</small></span>
+            <span class="trip-time">◷ <span>4 sec</span></span>
+          </button>
+          <button class="trip-card clinic-trip" id="clinic-trip" type="button" data-trip="clinic" disabled>
+            <span class="trip-emoji" aria-hidden="true">🩺</span>
+            <span class="trip-copy"><strong>Visit the clinic</strong><small>Medicine · health boost</small></span>
+            <span class="trip-reward"><b>+2</b><small>PTS</small></span>
+            <span class="trip-time">◷ <span>6 sec</span></span>
+          </button>
+        </div>
+        <p class="trip-tip">Needs slowly drop faster as time goes on. Deliver supplies at home to score.</p>
+      </section>
+
+      <section class="game-over" id="game-over" role="dialog" aria-modal="true" aria-labelledby="result-title" hidden>
+        <div class="result-icon" aria-hidden="true">🏠</div>
+        <p class="eyebrow">YOUR JOURNEY</p>
+        <h2 id="result-title">The household needs help</h2>
+        <p class="result-message" id="result-message">One of the household's needs reached zero.</p>
+        <div class="result-stats">
+          <div><strong id="final-time">00:00</strong><span>TIME SURVIVED</span></div>
+          <div><strong id="final-score">0</strong><span>FINAL SCORE</span></div>
+        </div>
+        <button class="restart-button" id="start-game" type="button">Try again <span aria-hidden="true">↻</span></button>
+      </section>
+
+      <div class="start-overlay" id="start-overlay">
+        <div class="start-card">
+          <span class="start-art" aria-hidden="true">💧</span>
+          <h2>Can you keep them going?</h2>
+          <p>Choose between a fast small-water run, a longer bucket trip, or medicine from the clinic. Every second matters.</p>
+          <button class="start-button" id="begin-game" type="button">Start your journey <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <div class="pause-overlay" id="pause-overlay" hidden>
+        <div class="pause-card">
+          <span class="pause-mark" aria-hidden="true">Ⅱ</span>
+          <h2>Journey paused</h2>
+          <p>Take a breath. The household is waiting right here.</p>
+          <button class="start-button" id="resume-game" type="button">Continue journey <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </main>
+    <footer>Plan each trip. Bring every drop home.</footer>
   </div>
   <script src="script.js"></script>
 </body>

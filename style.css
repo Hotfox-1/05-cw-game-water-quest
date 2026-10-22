@@ -1,143 +1,457 @@
-/* Charity: water Brand Colors & Fonts
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
-
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
-
-Fonts:
-- Proxima Nova
-- Avenir
-
-*/
-
-* {
-  box-sizing: border-box;
+:root {
+  font-family: 'DM Sans', 'Avenir Next', Avenir, sans-serif;
+  color: #173c48;
+  background: #eaf6f7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #173c48;
+  --muted: #738a90;
+  --blue: #2e9df7;
+  --yellow: #ffc907;
 }
+
+* { box-sizing: border-box; }
 
 body {
-  font-family: Arial, sans-serif;
+  min-width: 320px;
+  min-height: 100vh;
   margin: 0;
-  padding: 30px;
-  background-color: #f0f0f0;
-  color: #333;
+  padding: 34px 20px;
+  background:
+    radial-gradient(ellipse at 7% 12%, rgba(139, 209, 203, .45), transparent 31%),
+    radial-gradient(ellipse at 94% 84%, rgba(46, 157, 247, .12), transparent 28%),
+    #eaf6f7;
 }
+
+button { font: inherit; }
 
 .container {
-  max-width: 750px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-h1 img {
-  height: 50px;
-  margin-right: 15px;
-  display: block;
-}
-
-.game-instructions {
-  font-size: 18px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
-  background-color: #f5f5f5;
-  padding: 15px 0;
-  border-radius: 8px;
-}
-
-.stats p {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  width: min(100%, 800px);
   margin: 0 auto;
-  max-width: 500px;
-}
-
-.grid-cell {
-  background-color: #e8e8e8;
-  border-radius: 8px;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  position: relative;
+  padding: 25px 48px 20px;
   overflow: hidden;
+  background: rgba(255, 255, 255, .94);
+  border: 1px solid rgba(22, 88, 105, .08);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(29, 91, 105, .13);
 }
 
-.water-can-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
-  /* Ensure the wrapper is properly centered */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid #e8eff0; }
+.brand-logo { display: block; width: 146px; height: auto; }
+.edition-label, .eyebrow, .section-kicker { font-size: 10px; font-weight: 700; letter-spacing: .15em; }
+.edition-label { color: #82969b; }
+.intro { padding: 26px 0 23px; text-align: center; }
+.eyebrow { margin: 0 0 7px; color: #159a9c; }
+h1, h2, p { margin-top: 0; }
+h1, h2 { font-family: Manrope, 'Avenir Next', sans-serif; color: var(--ink); }
+h1 { margin-bottom: 8px; font-size: clamp(32px, 5vw, 43px); font-weight: 800; letter-spacing: -.055em; line-height: 1.1; }
+.game-instructions { max-width: 490px; margin: 0 auto; color: #698087; font-size: 14px; line-height: 1.6; }
+
+.dashboard { padding: 22px 25px 17px; background: #f4f9f9; border: 1px solid #e7f0f1; border-radius: 16px; transition: border-color .2s, box-shadow .2s; }
+.dashboard.is-danger { border-color: #f3a19c; box-shadow: 0 0 0 3px rgba(245, 64, 44, .08); }
+.dashboard-heading, .choices-heading { display: flex; align-items: center; justify-content: space-between; }
+.section-kicker { display: block; margin-bottom: 4px; color: #849a9f; }
+.dashboard h2, .choices h2 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035em; }
+.dashboard h2 span { font-size: 17px; }
+.survival-clock { display: flex; align-items: center; gap: 7px; color: #1d6c7b; font-family: Manrope, sans-serif; font-size: 21px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.clock-icon { color: #61aeb3; font-size: 23px; }
+.meter-list { display: grid; grid-template-columns: 1fr 1fr; gap: 19px; margin-top: 20px; }
+.meter-card { padding: 14px 15px 10px; background: #fff; border: 1px solid #e8f0f0; border-radius: 12px; }
+.meter-label { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: #355761; font-size: 13px; font-weight: 700; }
+.meter-label strong { margin-left: auto; color: var(--ink); font-family: Manrope, sans-serif; font-size: 14px; font-variant-numeric: tabular-nums; }
+.meter-icon { display: inline-grid; width: 24px; height: 24px; place-items: center; border-radius: 8px; font-size: 13px; }
+.hydration-icon { background: #e5f4ff; }
+.health-icon { color: #e96862; background: #fff0ef; font-size: 19px; font-weight: 700; }
+.meter-track { height: 9px; overflow: hidden; background: #e8eff0; border-radius: 99px; }
+.meter-fill { display: block; width: 70%; height: 100%; border-radius: inherit; transition: width .18s linear, background .2s; }
+.hydration-fill { background: linear-gradient(90deg, #53b9ed, #2e9df7); }
+.health-fill { background: linear-gradient(90deg, #72cc91, #39ad6c); }
+.meter-track.is-low .meter-fill { background: #f16e62; }
+.meter-note { margin: 8px 0 0; color: #8a9ca0; font-size: 10px; }
+.trip-status { display: flex; align-items: center; gap: 8px; min-height: 29px; margin-top: 10px; color: #698087; font-size: 11px; font-weight: 600; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #54b982; box-shadow: 0 0 0 3px rgba(84, 185, 130, .13); }
+.status-dot.is-traveling { background: #f5a832; box-shadow: 0 0 0 3px rgba(245, 168, 50, .15); animation: pulse 1.2s infinite; }
+
+.choices { padding: 22px 0 8px; }
+.choices-heading { margin-bottom: 13px; }
+.score-chip { display: flex; align-items: center; gap: 5px; padding: 7px 11px; color: #7a6100; background: #fff7d8; border: 1px solid #f7e9af; border-radius: 10px; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; }
+.score-chip > span:first-child { color: #e7ad00; }
+.score-chip small { margin-left: 2px; color: #a3935d; font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: .1em; }
+.trip-options { display: grid; gap: 9px; }
+.trip-card { display: grid; grid-template-columns: 47px minmax(0, 1fr) 45px 75px; align-items: center; gap: 12px; width: 100%; min-height: 69px; padding: 10px 15px; text-align: left; background: #fff; border: 1px solid #e7eeee; border-radius: 13px; cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s, opacity .15s; }
+.trip-card:not(:disabled):hover { transform: translateY(-2px); border-color: #8ac9dd; box-shadow: 0 7px 18px rgba(44, 117, 134, .1); }
+.trip-card:focus-visible, .start-button:focus-visible, .restart-button:focus-visible { outline: 3px solid #ffc907; outline-offset: 3px; }
+.trip-card:disabled { cursor: not-allowed; opacity: .58; }
+.trip-emoji { display: grid; width: 43px; height: 43px; place-items: center; background: #e9f7ff; border-radius: 12px; font-size: 23px; }
+.bottle-icon { background: #e7f7f8; }
+.clinic-trip .trip-emoji { background: #fff1ee; }
+.trip-copy { display: grid; gap: 3px; }
+.trip-copy strong { color: #244953; font-size: 13px; font-weight: 700; }
+.trip-copy small { color: #8a9ca0; font-size: 10px; }
+.trip-reward { display: grid; justify-items: center; color: #168a9e; }
+.clinic-trip .trip-reward { color: #df7770; }
+.trip-reward b { font-family: Manrope, sans-serif; font-size: 16px; }
+.trip-reward small { font-size: 8px; font-weight: 700; letter-spacing: .08em; }
+.trip-time { justify-self: end; color: #779096; font-size: 11px; white-space: nowrap; }
+.trip-time span { color: #58727a; font-weight: 600; }
+.trip-tip { margin: 11px 2px 0; color: #87999e; font-size: 10px; line-height: 1.5; }
+
+.start-overlay { position: fixed; z-index: 4; inset: 0; display: grid; place-items: center; padding: 22px; background: rgba(15, 48, 58, .43); backdrop-filter: blur(4px); }
+.start-overlay[hidden], .game-over[hidden] { display: none; }
+.start-card, .game-over { width: min(100%, 390px); padding: 34px; text-align: center; background: #fff; border: 1px solid #edf3f3; border-radius: 21px; box-shadow: 0 24px 70px rgba(16, 54, 65, .22); animation: appear .25s ease-out; }
+.start-art, .result-icon { display: grid; width: 58px; height: 58px; margin: 0 auto 14px; place-items: center; background: #e8f7fd; border-radius: 18px; font-size: 29px; }
+.start-card h2, .game-over h2 { margin-bottom: 8px; font-size: 22px; font-weight: 800; letter-spacing: -.045em; }
+.start-card p, .result-message { margin-bottom: 21px; color: #72878d; font-size: 13px; line-height: 1.65; }
+.start-button, .restart-button { width: 100%; padding: 13px 16px; color: #183e49; background: var(--yellow); border: 0; border-radius: 11px; cursor: pointer; font-size: 13px; font-weight: 800; transition: transform .15s, filter .15s; }
+.start-button:hover, .restart-button:hover { transform: translateY(-1px); filter: brightness(1.03); }
+.start-button span { margin-left: 8px; }
+.game-over { position: fixed; z-index: 5; inset: 50% auto auto 50%; transform: translate(-50%, -50%); animation: resultAppear .25s ease-out; }
+.result-icon { background: #fff4d5; }
+.result-stats { display: grid; grid-template-columns: 1fr 1fr; margin: 21px 0; padding: 15px 0; background: #f4f9f9; border-radius: 12px; }
+.result-stats div { display: grid; gap: 3px; }
+.result-stats div + div { border-left: 1px solid #dce8e9; }
+.result-stats strong { color: #1b6779; font-family: Manrope, sans-serif; font-size: 23px; font-variant-numeric: tabular-nums; }
+.result-stats span { color: #87999e; font-size: 8px; font-weight: 700; letter-spacing: .1em; }
+.restart-button { color: #fff; background: #168a9e; }
+footer { padding-top: 15px; color: #96a8ac; text-align: center; font-size: 10px; letter-spacing: .025em; }
+
+@keyframes pulse { 50% { opacity: .45; } }
+@keyframes appear { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes resultAppear { from { opacity: 0; transform: translate(-50%, -46%) scale(.98); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+@media (max-width: 600px) {
+  body { padding: 12px 10px; }
+  .container { padding: 18px 18px 15px; border-radius: 18px; }
+  .topbar { padding-bottom: 15px; }
+  .brand-logo { width: 128px; }
+  .edition-label { font-size: 8px; }
+  .intro { padding: 22px 0 18px; }
+  .game-instructions { font-size: 12px; }
+  .dashboard { padding: 17px 14px 12px; }
+  .meter-list { gap: 9px; }
+  .meter-card { padding: 11px 9px 9px; }
+  .meter-label { gap: 5px; font-size: 11px; }
+  .meter-label strong { font-size: 12px; }
+  .meter-note { font-size: 9px; }
+  .trip-card { grid-template-columns: 39px minmax(0, 1fr) 35px 57px; gap: 8px; padding: 9px; }
+  .trip-emoji { width: 37px; height: 39px; font-size: 20px; }
+  .trip-copy strong { font-size: 11px; }
+  .trip-copy small { font-size: 9px; }
+  .trip-time { font-size: 9px; }
 }
 
-.water-can {
+@media (max-width: 370px) {
+  .container { padding-right: 13px; padding-left: 13px; }
+  .meter-list { grid-template-columns: 1fr; }
+  .meter-card { padding: 10px 12px; }
+  .trip-card { grid-template-columns: 35px minmax(0, 1fr) 31px; }
+  .trip-time { grid-column: 2 / 4; justify-self: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Illustrated neighborhood, moving traveler, and compact fixed game controls. */
+body { padding-bottom: 145px; }
+.container { overflow: visible; margin-bottom: 0; }
+.topbar { min-height: 43px; }
+.top-controls { display: flex; align-items: center; gap: 15px; }
+.top-clock { display: flex; align-items: center; gap: 5px; color: #1d6c7b; font-family: Manrope, sans-serif; font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.top-clock > span:first-child { color: #61aeb3; font-size: 21px; }
+.pause-button { display: flex; align-items: center; gap: 6px; padding: 8px 11px; color: #45646c; background: #f2f8f8; border: 1px solid #dfeaec; border-radius: 9px; cursor: pointer; font-size: 11px; font-weight: 700; }
+.pause-button:disabled { opacity: .48; cursor: not-allowed; }
+.pause-button:not(:disabled):hover { background: #e6f3f4; }
+.pause-button:focus-visible, #resume-game:focus-visible { outline: 3px solid #ffc907; outline-offset: 3px; }
+.intro { padding: 20px 0 16px; }
+.intro .eyebrow { margin-bottom: 4px; }
+h1 { font-size: clamp(30px, 4vw, 37px); }
+.journey-scene { position: relative; height: 222px; overflow: hidden; isolation: isolate; background: linear-gradient(180deg, #d9f3f4 0%, #f0fbf4 69%, #c8e8ce 70%, #b6deb9 100%); border: 1px solid #d6ebeb; border-radius: 17px; }
+.journey-scene::before, .journey-scene::after { position: absolute; z-index: -1; bottom: 27px; width: 58%; height: 78px; content: ''; background: #b6dfc5; border-radius: 50% 50% 0 0; }
+.journey-scene::before { left: -12%; }
+.journey-scene::after { right: -12%; height: 93px; background: #a6d6b7; }
+.scene-sun { position: absolute; top: 18px; right: 20%; width: 34px; height: 34px; background: #ffe49a; border-radius: 50%; box-shadow: 0 0 0 8px rgba(255, 228, 154, .2); }
+.scene-cloud { position: absolute; top: 34px; width: 48px; height: 13px; background: rgba(255, 255, 255, .8); border-radius: 20px; }
+.scene-cloud::before, .scene-cloud::after { position: absolute; bottom: 2px; content: ''; background: inherit; border-radius: 50%; }
+.scene-cloud::before { left: 8px; width: 19px; height: 19px; }
+.scene-cloud::after { left: 23px; width: 15px; height: 15px; }
+.cloud-one { left: 21%; }
+.cloud-two { top: 58px; right: 11%; transform: scale(.7); opacity: .75; }
+.destination { position: absolute; z-index: 1; top: 56px; display: grid; justify-items: center; gap: 4px; width: 92px; }
+.lake-destination { left: 4%; }
+.clinic-destination { right: 4%; }
+.destination-name, .home-label { padding: 3px 6px; color: #397581; background: rgba(255,255,255,.8); border: 1px solid rgba(65, 139, 149, .12); border-radius: 6px; font-size: 8px; font-weight: 800; letter-spacing: .11em; white-space: nowrap; }
+.lake-art { position: relative; width: 78px; height: 54px; overflow: hidden; }
+.lake-art::before { position: absolute; bottom: 3px; left: 2px; width: 74px; height: 29px; content: ''; background: #56bce1; border: 4px solid #f4fdff; border-radius: 50%; box-shadow: 0 4px 0 #319bca; }
+.lake-sun { position: absolute; top: 1px; right: 15px; width: 14px; height: 14px; background: #ffc907; border-radius: 50%; }
+.lake-water { position: absolute; z-index: 1; bottom: 17px; left: 23px; width: 29px; height: 3px; border-top: 2px solid rgba(255,255,255,.85); border-radius: 50%; }
+.lake-reeds { position: absolute; z-index: 2; bottom: 16px; left: 7px; color: #55a875; font-size: 23px; transform: rotate(-22deg); }
+.clinic-art { position: relative; width: 54px; height: 51px; margin-top: 3px; background: #fff7e9; border: 3px solid #d9866f; border-radius: 6px 6px 2px 2px; box-shadow: 0 5px 0 #b8d8ba; }
+.clinic-art::before { position: absolute; top: -13px; left: -5px; width: 56px; height: 20px; content: ''; background: #e97557; clip-path: polygon(50% 0,100% 100%,0 100%); }
+.clinic-cross { position: absolute; z-index: 1; top: 8px; right: 5px; display: grid; width: 15px; height: 15px; place-items: center; color: #fff; background: #58b5aa; border-radius: 3px; font-size: 15px; font-weight: 800; line-height: 1; }
+.clinic-door { position: absolute; bottom: 0; left: 8px; width: 14px; height: 25px; background: #a7d9d3; border-radius: 6px 6px 0 0; }
+.clinic-window { position: absolute; bottom: 12px; right: 7px; width: 12px; height: 12px; background: #8dd1d4; border: 2px solid #fff; }
+.home-destination { position: absolute; z-index: 2; top: 41px; left: 50%; display: grid; justify-items: center; transform: translateX(-50%); }
+.home-label { color: #9c5749; }
+.house-art { width: 119px; height: 108px; filter: drop-shadow(0 5px 2px rgba(75, 132, 97, .13)); }
+.home-heart { position: absolute; top: 45px; left: calc(50% + 2px); color: #ffc907; font-size: 13px; transform: translateX(-50%); }
+.travel-route { position: absolute; z-index: 1; right: 12%; bottom: 25px; left: 12%; height: 1px; border-top: 2px dashed rgba(72, 151, 139, .58); }
+.travel-route::before, .travel-route::after { position: absolute; top: -6px; width: 8px; height: 8px; content: ''; background: #69b89a; border: 2px solid #eaf8eb; border-radius: 50%; }
+.travel-route::before { left: 0; }
+.travel-route::after { right: 0; }
+.traveler { --traveler-x: 50%; position: absolute; z-index: 3; bottom: 26px; left: var(--traveler-x); width: 28px; height: 42px; transform: translateX(-50%); transition: left .12s linear; }
+.traveler-head { position: absolute; z-index: 2; top: 1px; left: 8px; width: 15px; height: 15px; background: #9c5f43; border: 2px solid #fff0d2; border-radius: 50%; }
+.traveler-head::after { position: absolute; top: 5px; right: 1px; width: 2px; height: 2px; content: ''; background: #2e4140; border-radius: 50%; }
+.traveler-body { position: absolute; top: 14px; left: 6px; width: 18px; height: 20px; background: #ffc907; border: 2px solid #fff8de; border-radius: 8px 8px 5px 5px; }
+.traveler-arm { position: absolute; z-index: 1; top: 17px; left: 2px; width: 9px; height: 14px; background: #d79367; border: 2px solid #fff0d2; border-radius: 8px; transform: rotate(25deg); }
+.traveler-leg { position: absolute; top: 31px; width: 7px; height: 11px; background: #387e86; border-radius: 5px; transform-origin: top center; }
+.leg-one { left: 8px; }
+.leg-two { left: 16px; }
+.traveler.is-walking .leg-one { animation: walk .24s infinite alternate ease-in-out; }
+.traveler.is-walking .leg-two { animation: walk .24s infinite alternate-reverse ease-in-out; }
+.traveler.is-walking { animation: bob .48s infinite ease-in-out; }
+.traveler.is-facing-left { scale: -1 1; }
+.traveler-bundle { position: absolute; z-index: 3; top: 14px; right: -4px; display: none; width: 11px; height: 14px; background: #57bfe8; border: 2px solid white; border-radius: 3px 3px 5px 5px; }
+.traveler.has-supplies .traveler-bundle { display: block; }
+.traveler[data-supply="large"] .traveler-bundle { width: 15px; height: 14px; background: #d6a94e; border-radius: 2px 2px 5px 5px; }
+.traveler[data-supply="clinic"] .traveler-bundle { background: #ef9387; }
+.destination.is-active .destination-name { color: #fff; background: #168a9e; }
+.destination.is-active .lake-art, .destination.is-active .clinic-art { filter: drop-shadow(0 0 7px rgba(255, 201, 7, .9)); }
+.scene-caption { position: absolute; z-index: 4; right: 8px; bottom: 6px; left: 8px; color: #4f8284; text-align: center; font-size: 9px; font-weight: 700; letter-spacing: .03em; }
+.dashboard { margin-top: 13px; padding: 15px 18px 10px; }
+.dashboard-heading h2 { font-size: 16px; }
+.meter-list { margin-top: 12px; }
+.meter-card { padding: 10px 12px 8px; }
+.choices { position: fixed; z-index: 6; right: 50%; bottom: 15px; display: grid; grid-template-columns: 65px minmax(0, 1fr); align-items: center; gap: 11px; width: min(calc(100% - 36px), 704px); margin: 0; padding: 11px 13px; background: rgba(255, 255, 255, .97); border: 1px solid #dce9e9; border-radius: 16px; box-shadow: 0 10px 35px rgba(29, 91, 105, .2); transform: translateX(50%); backdrop-filter: blur(12px); }
+.dock-score { display: grid; justify-items: center; gap: 1px; color: #b28a00; }
+.dock-score > span { font-size: 15px; }
+.dock-score strong { color: #294f59; font-family: Manrope, sans-serif; font-size: 21px; line-height: 1; }
+.dock-score small { color: #86999d; font-size: 8px; font-weight: 800; letter-spacing: .11em; }
+.trip-options { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+.trip-card { grid-template-columns: 34px minmax(0, 1fr) 30px; gap: 5px; min-width: 0; min-height: 58px; padding: 7px; border-radius: 11px; }
+.trip-emoji { width: 32px; height: 34px; border-radius: 9px; font-size: 18px; }
+.trip-copy { gap: 2px; min-width: 0; }
+.trip-copy strong { overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.trip-copy small { overflow: hidden; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.trip-reward b { font-size: 13px; }
+.trip-reward small { font-size: 7px; }
+.trip-time { display: none; }
+.trip-tip { display: none; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.start-overlay, .pause-overlay { z-index: 8; }
+.pause-overlay[hidden] { display: none; }
+.pause-overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(15, 48, 58, .38); backdrop-filter: blur(4px); }
+.pause-card { width: min(100%, 350px); padding: 29px; text-align: center; background: white; border-radius: 20px; box-shadow: 0 24px 70px rgba(16, 54, 65, .22); }
+.pause-mark { display: grid; width: 48px; height: 48px; margin: 0 auto 13px; place-items: center; color: #277e88; background: #e7f6f4; border-radius: 15px; font-size: 21px; font-weight: 800; }
+.pause-card h2 { margin-bottom: 7px; font-size: 21px; }
+.pause-card p { margin-bottom: 19px; color: #72878d; font-size: 12px; }
+
+@keyframes walk { to { transform: rotate(32deg); } }
+@keyframes bob { 50% { translate: 0 -2px; } }
+
+@media (max-width: 600px) {
+  body { padding: 10px 10px 126px; }
+  .container { padding: 15px 15px 14px; }
+  .topbar { align-items: flex-start; }
+  .top-controls { gap: 8px; }
+  .topbar .edition-label { display: none; }
+  .top-clock { font-size: 16px; }
+  .pause-button { padding: 7px 8px; }
+  .pause-label { display: none; }
+  .intro { padding: 16px 0 12px; }
+  .journey-scene { height: 207px; }
+  .destination { transform: scale(.86); transform-origin: top center; }
+  .lake-destination { left: 0; }
+  .clinic-destination { right: 0; }
+  .house-art { width: 105px; height: 98px; }
+  .home-destination { top: 42px; }
+  .home-heart { top: 42px; }
+  .dashboard { margin-top: 10px; padding: 12px 11px 8px; }
+  .meter-list { gap: 7px; }
+  .meter-card { padding: 9px 8px 7px; }
+  .meter-label { gap: 4px; font-size: 10px; }
+  .meter-icon { width: 20px; height: 20px; }
+  .meter-label strong { font-size: 11px; }
+  .meter-note { font-size: 8px; }
+  .choices { bottom: 9px; grid-template-columns: 43px minmax(0, 1fr); gap: 7px; width: calc(100% - 18px); padding: 8px; }
+  .dock-score strong { font-size: 18px; }
+  .trip-options { gap: 5px; }
+  .trip-card { grid-template-columns: 26px minmax(0, 1fr); gap: 4px; min-height: 58px; padding: 5px; }
+  .trip-emoji { width: 26px; height: 27px; font-size: 15px; }
+  .trip-copy strong { font-size: 8px; }
+  .trip-copy small { display: none; }
+  .trip-reward { grid-column: 2; display: flex; align-items: baseline; gap: 2px; justify-items: start; }
+  .trip-reward b { font-size: 10px; }
+  .trip-reward small { font-size: 6px; }
+}
+
+@media (max-width: 370px) {
+  .container { padding-right: 11px; padding-left: 11px; }
+  .meter-list { grid-template-columns: 1fr 1fr; }
+  .choices { grid-template-columns: 37px minmax(0, 1fr); }
+  .trip-card { grid-template-columns: 23px minmax(0, 1fr); }
+  .trip-emoji { width: 23px; height: 25px; font-size: 13px; }
+  .trip-copy strong { font-size: 7px; }
+}
+
+/* Let the illustrated world use the viewport instead of sitting inside a card. */
+html, body { width: 100%; min-height: 100%; }
+body { height: 100vh; height: 100dvh; min-height: 0; padding: 0 0 104px; overflow: hidden; }
+.container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  background-image: url('img/water-can.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  border-radius: 50%;
-  animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
-  transform-origin: center; /* Ensure scaling happens from the center */
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: 12px clamp(14px, 3vw, 48px) 8px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: rgba(255, 255, 255, .96);
+}
+.container > main { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+.topbar { flex: 0 0 auto; padding-bottom: 9px; }
+.intro { flex: 0 0 auto; padding: 10px 0 11px; }
+.journey-scene {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: clamp(190px, 31vh, 370px);
+  max-height: 760px;
+  border-radius: 20px;
+}
+.dashboard { flex: 0 0 auto; margin-top: 10px; padding: 11px 16px 8px; }
+.meter-list { margin-top: 8px; }
+.meter-card { padding: 8px 11px 6px; }
+.meter-note { margin-top: 5px; }
+.trip-status { min-height: 23px; margin-top: 4px; }
+footer { flex: 0 0 auto; padding-top: 5px; }
+.house-art { width: clamp(125px, 18vw, 270px); height: auto; }
+.home-destination { top: 12%; }
+.home-heart { top: 38%; }
+.destination { top: 19%; transform: scale(clamp(1, 1.22, 1.6)); transform-origin: top center; }
+.lake-destination { left: 5%; }
+.clinic-destination { right: 5%; }
+.scene-sun { width: clamp(34px, 4vw, 64px); height: clamp(34px, 4vw, 64px); }
+.lake-art { scale: clamp(1, 1.25, 1.7); transform-origin: bottom center; }
+.clinic-art { scale: clamp(1, 1.25, 1.7); transform-origin: bottom center; }
+.traveler { scale: clamp(1, 1.35, 1.8); transform-origin: bottom center; }
+.scene-caption { bottom: 9px; font-size: clamp(9px, 1vw, 13px); }
+.choices { bottom: 12px; }
+
+/* Start and ending views are full-screen scenes, not floating dialog cards. */
+.start-overlay, .pause-overlay, .game-over {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: clamp(22px, 6vw, 90px);
+  border: 0;
+  border-radius: 0;
+  transform: none;
+}
+.start-overlay {
+  z-index: 8;
+  background: rgba(220, 243, 243, .57);
+  backdrop-filter: blur(2px);
+}
+.start-card {
+  width: min(100%, 500px);
+  padding: clamp(28px, 5vw, 52px);
+  border-radius: 24px;
+  box-shadow: 0 25px 80px rgba(16, 54, 65, .2);
+}
+.start-card h2, .game-over h2 { font-size: clamp(24px, 4vw, 40px); }
+.start-card p, .result-message { font-size: clamp(13px, 1.5vw, 17px); }
+.game-over {
+  z-index: 10;
+  overflow-y: auto;
+  background: linear-gradient(145deg, rgba(218, 244, 245, .9), rgba(255, 255, 255, .94));
+  backdrop-filter: blur(5px);
+  animation: fullscreenAppear .25s ease-out;
+}
+.game-over[hidden] { display: none; }
+.result-icon { width: clamp(60px, 9vw, 100px); height: clamp(60px, 9vw, 100px); font-size: clamp(30px, 5vw, 50px); }
+.result-stats { width: min(100%, 450px); margin-right: auto; margin-left: auto; padding: 20px 8px; }
+.result-stats strong { font-size: clamp(25px, 4vw, 38px); }
+.restart-button { width: min(100%, 340px); padding: 15px 20px; font-size: 15px; }
+.pause-overlay { z-index: 9; background: rgba(220, 243, 243, .7); backdrop-filter: blur(4px); }
+.pause-card { width: min(100%, 440px); padding: clamp(28px, 5vw, 46px); }
+.pause-card h2 { font-size: clamp(23px, 3vw, 34px); }
+
+@keyframes fullscreenAppear { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 600px) {
+  body { padding-bottom: 91px; }
+  .container { padding: 9px 10px 5px; }
+  .topbar { padding-bottom: 7px; }
+  .brand-logo { width: clamp(105px, 34vw, 128px); }
+  .top-controls { gap: 7px; }
+  .top-clock { font-size: 15px; }
+  .intro { padding: 7px 0 9px; }
+  .intro .eyebrow { font-size: 8px; }
+  h1 { margin-bottom: 4px; font-size: clamp(26px, 8vw, 34px); }
+  .game-instructions { max-width: 410px; font-size: 11px; line-height: 1.35; }
+  .journey-scene { min-height: clamp(170px, 29vh, 310px); border-radius: 14px; }
+  .home-destination { top: 13%; }
+  .house-art { width: clamp(105px, 31vw, 175px); }
+  .home-heart { top: 38%; }
+  .destination { top: 21%; transform: scale(.82); }
+  .lake-destination { left: 0; }
+  .clinic-destination { right: 0; }
+  .lake-art, .clinic-art { scale: 1; }
+  .traveler { scale: 1; }
+  .dashboard { margin-top: 7px; padding: 8px 9px 5px; }
+  .dashboard-heading h2 { font-size: 13px; }
+  .section-kicker { font-size: 8px; }
+  .meter-list { gap: 6px; margin-top: 6px; }
+  .meter-card { padding: 6px 7px 5px; }
+  .meter-label { margin-bottom: 5px; font-size: 9px; }
+  .meter-label strong { font-size: 10px; }
+  .meter-track { height: 7px; }
+  .meter-note { font-size: 7px; }
+  .trip-status { min-height: 18px; font-size: 9px; }
+  .choices { bottom: 7px; width: calc(100% - 14px); grid-template-columns: 36px minmax(0, 1fr); gap: 5px; padding: 6px; }
+  .dock-score strong { font-size: 16px; }
+  .dock-score small { font-size: 7px; }
+  .trip-options { gap: 4px; }
+  .trip-card { min-height: 51px; }
+  .start-overlay, .pause-overlay, .game-over { padding: 18px; }
+  .start-card { padding: 25px 21px; }
+  .game-over { justify-items: center; }
 }
 
-@keyframes popUp {
-  0% {
-    transform: scale(0.5); /* Start scaling from the center */
-  }
-  100% {
-    transform: scale(1); /* End scaling at full size */
-  }
+@media (max-height: 650px) {
+  .intro { padding-top: 5px; padding-bottom: 6px; }
+  .intro .eyebrow { margin-bottom: 2px; }
+  h1 { font-size: clamp(25px, 4vh, 32px); }
+  .journey-scene { min-height: 150px; }
+  .dashboard { padding-top: 6px; padding-bottom: 4px; }
+  .meter-note { display: none; }
+  .trip-status { min-height: 15px; }
+  .choices { bottom: 5px; }
 }
 
+@media (max-width: 370px) {
+  .journey-scene { min-height: 155px; }
+  .destination { transform: scale(.72); }
+  .home-destination { top: 14%; }
+  .house-art { width: 100px; }
+  .choices { grid-template-columns: 31px minmax(0, 1fr); }
+  .trip-card { grid-template-columns: 21px minmax(0, 1fr); }
+  .trip-emoji { width: 21px; height: 24px; }
+}
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: block;
-  margin: 30px auto 0;
-  transition: background-color 0.2s;
+@media (prefers-reduced-motion: reduce) {
+  .game-over { animation: none; }
 }

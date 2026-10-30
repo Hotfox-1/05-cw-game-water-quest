@@ -70,6 +70,7 @@
             <span class="section-kicker">YOUR HOUSEHOLD</span>
             <h2>Holding on <span aria-hidden="true">🏠</span></h2>
           </div>
+          <span class="difficulty-badge" id="difficulty-label">Easy</span>
         </div>
 
         <div class="meter-list">
@@ -89,6 +90,7 @@
           <span class="status-dot" id="status-dot"></span>
           <span id="trip-status">Ready at home</span>
         </div>
+        <p class="milestone-message" id="milestone-message" aria-live="polite" aria-atomic="true" hidden></p>
       </section>
 
       <section class="choices" aria-labelledby="choices-title">
@@ -126,6 +128,10 @@
           <div><strong id="final-time">00:00</strong><span>TIME SURVIVED</span></div>
           <div><strong id="final-score">0</strong><span>FINAL SCORE</span></div>
         </div>
+        <section class="milestone-recap" aria-labelledby="milestone-title">
+          <h3 id="milestone-title">Milestones reached</h3>
+          <ul id="milestone-list"></ul>
+        </section>
         <button class="restart-button" id="start-game" type="button">Try again <span aria-hidden="true">↻</span></button>
       </section>
 
@@ -134,6 +140,14 @@
           <span class="start-art" aria-hidden="true">💧</span>
           <h2>Can you keep them going?</h2>
           <p>Choose between a fast small-water run, a longer bucket trip, or medicine from the clinic. Every second matters.</p>
+          <label class="difficulty-picker" for="difficulty-select">Choose difficulty
+            <select id="difficulty-select">
+              <option value="easy">Easy — steady needs</option>
+              <option value="medium">Medium — faster drain, trip mishaps</option>
+              <option value="hard">Hard — fastest drain, mishaps grow likelier</option>
+            </select>
+          </label>
+          <p class="difficulty-help">Medium mishaps happen about 1 in 20 trips. On Hard, that chance gradually rises to 1 in 12.</p>
           <button class="start-button" id="begin-game" type="button">Start your journey <span aria-hidden="true">→</span></button>
         </div>
       </div>
@@ -147,7 +161,14 @@
         </div>
       </div>
     </main>
-    <footer>Plan each trip. Bring every drop home.</footer>
+    <footer class="site-footer">
+      <span class="footer-kicker">KEEP THE IMPACT GOING</span>
+      <span>Plan each trip. Bring every drop home.</span>
+      <nav aria-label="charity: water links">
+        <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer">About charity: water</a>
+        <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate</a>
+      </nav>
+    </footer>
   </div>
   <script src="script.js"></script>
 </body>

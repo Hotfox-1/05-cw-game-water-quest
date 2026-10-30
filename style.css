@@ -52,6 +52,7 @@ h1 { margin-bottom: 8px; font-size: clamp(32px, 5vw, 43px); font-weight: 800; le
 .dashboard { padding: 22px 25px 17px; background: #f4f9f9; border: 1px solid #e7f0f1; border-radius: 16px; transition: border-color .2s, box-shadow .2s; }
 .dashboard.is-danger { border-color: #f3a19c; box-shadow: 0 0 0 3px rgba(245, 64, 44, .08); }
 .dashboard-heading, .choices-heading { display: flex; align-items: center; justify-content: space-between; }
+.difficulty-badge { padding: 5px 9px; color: #397581; background: #e7f6f4; border-radius: 999px; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .section-kicker { display: block; margin-bottom: 4px; color: #849a9f; }
 .dashboard h2, .choices h2 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035em; }
 .dashboard h2 span { font-size: 17px; }
@@ -71,6 +72,8 @@ h1 { margin-bottom: 8px; font-size: clamp(32px, 5vw, 43px); font-weight: 800; le
 .meter-track.is-low .meter-fill { background: #f16e62; }
 .meter-note { margin: 8px 0 0; color: #8a9ca0; font-size: 10px; }
 .trip-status { display: flex; align-items: center; gap: 8px; min-height: 29px; margin-top: 10px; color: #698087; font-size: 11px; font-weight: 600; }
+.milestone-message { margin: 3px 0 0 15px; color: #168a9e; font-size: 10px; font-weight: 700; }
+.milestone-message[hidden] { display: none; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #54b982; box-shadow: 0 0 0 3px rgba(84, 185, 130, .13); }
 .status-dot.is-traveling { background: #f5a832; box-shadow: 0 0 0 3px rgba(245, 168, 50, .15); animation: pulse 1.2s infinite; }
 
@@ -104,6 +107,10 @@ h1 { margin-bottom: 8px; font-size: clamp(32px, 5vw, 43px); font-weight: 800; le
 .start-art, .result-icon { display: grid; width: 58px; height: 58px; margin: 0 auto 14px; place-items: center; background: #e8f7fd; border-radius: 18px; font-size: 29px; }
 .start-card h2, .game-over h2 { margin-bottom: 8px; font-size: 22px; font-weight: 800; letter-spacing: -.045em; }
 .start-card p, .result-message { margin-bottom: 21px; color: #72878d; font-size: 13px; line-height: 1.65; }
+.difficulty-picker { display: grid; gap: 7px; margin: 0 0 8px; color: #355761; text-align: left; font-size: 12px; font-weight: 700; }
+.difficulty-picker select { width: 100%; padding: 11px 12px; color: #244953; background: #f7fbfb; border: 1px solid #dce9e9; border-radius: 10px; font: inherit; font-size: 12px; }
+.difficulty-picker select:focus-visible { outline: 3px solid #ffc907; outline-offset: 2px; }
+.start-card .difficulty-help { margin: 0 0 18px; color: #87999e; text-align: left; font-size: 10px; line-height: 1.5; }
 .start-button, .restart-button { width: 100%; padding: 13px 16px; color: #183e49; background: var(--yellow); border: 0; border-radius: 11px; cursor: pointer; font-size: 13px; font-weight: 800; transition: transform .15s, filter .15s; }
 .start-button:hover, .restart-button:hover { transform: translateY(-1px); filter: brightness(1.03); }
 .start-button span { margin-left: 8px; }
@@ -114,6 +121,11 @@ h1 { margin-bottom: 8px; font-size: clamp(32px, 5vw, 43px); font-weight: 800; le
 .result-stats div + div { border-left: 1px solid #dce8e9; }
 .result-stats strong { color: #1b6779; font-family: Manrope, sans-serif; font-size: 23px; font-variant-numeric: tabular-nums; }
 .result-stats span { color: #87999e; font-size: 8px; font-weight: 700; letter-spacing: .1em; }
+.milestone-recap { margin: 0 0 20px; padding: 14px 16px; text-align: left; background: #f4f9f9; border-radius: 12px; }
+.milestone-recap h3 { margin: 0 0 9px; color: #355761; font-size: 12px; }
+.milestone-recap ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.milestone-recap li { display: grid; gap: 2px; color: #72878d; font-size: 10px; line-height: 1.4; }
+.milestone-recap li strong { color: #168a9e; font-size: 11px; }
 .restart-button { color: #fff; background: #168a9e; }
 footer { padding-top: 15px; color: #96a8ac; text-align: center; font-size: 10px; letter-spacing: .025em; }
 
@@ -213,6 +225,8 @@ h1 { font-size: clamp(30px, 4vw, 37px); }
 .traveler.is-walking .leg-two { animation: walk .24s infinite alternate-reverse ease-in-out; }
 .traveler.is-walking { animation: bob .48s infinite ease-in-out; }
 .traveler.is-facing-left { scale: -1 1; }
+.traveler.is-tripped .traveler-body { transform: rotate(20deg); }
+.traveler.is-tripped .traveler-leg { transform: rotate(22deg); }
 .traveler-bundle { position: absolute; z-index: 3; top: 14px; right: -4px; display: none; width: 11px; height: 14px; background: #57bfe8; border: 2px solid white; border-radius: 3px 3px 5px 5px; }
 .traveler.has-supplies .traveler-bundle { display: block; }
 .traveler[data-supply="large"] .traveler-bundle { width: 15px; height: 14px; background: #d6a94e; border-radius: 2px 2px 5px 5px; }
@@ -224,7 +238,7 @@ h1 { font-size: clamp(30px, 4vw, 37px); }
 .dashboard-heading h2 { font-size: 16px; }
 .meter-list { margin-top: 12px; }
 .meter-card { padding: 10px 12px 8px; }
-.choices { position: fixed; z-index: 6; right: 50%; bottom: 15px; display: grid; grid-template-columns: 65px minmax(0, 1fr); align-items: center; gap: 11px; width: min(calc(100% - 36px), 704px); margin: 0; padding: 11px 13px; background: rgba(255, 255, 255, .97); border: 1px solid #dce9e9; border-radius: 16px; box-shadow: 0 10px 35px rgba(29, 91, 105, .2); transform: translateX(50%); backdrop-filter: blur(12px); }
+.choices { position: static; display: grid; grid-template-columns: 65px minmax(0, 1fr); align-items: center; gap: 11px; width: min(100%, 704px); margin: 10px auto 0; padding: 11px 13px; background: #fff; border: 1px solid #dce9e9; border-radius: 16px; box-shadow: 0 4px 14px rgba(29, 91, 105, .08); }
 .dock-score { display: grid; justify-items: center; gap: 1px; color: #b28a00; }
 .dock-score > span { font-size: 15px; }
 .dock-score strong { color: #294f59; font-family: Manrope, sans-serif; font-size: 21px; line-height: 1; }
@@ -275,7 +289,7 @@ h1 { font-size: clamp(30px, 4vw, 37px); }
   .meter-icon { width: 20px; height: 20px; }
   .meter-label strong { font-size: 11px; }
   .meter-note { font-size: 8px; }
-  .choices { bottom: 9px; grid-template-columns: 43px minmax(0, 1fr); gap: 7px; width: calc(100% - 18px); padding: 8px; }
+  .choices { grid-template-columns: 43px minmax(0, 1fr); gap: 7px; width: 100%; padding: 8px; }
   .dock-score strong { font-size: 18px; }
   .trip-options { gap: 5px; }
   .trip-card { grid-template-columns: 26px minmax(0, 1fr); gap: 4px; min-height: 58px; padding: 5px; }
@@ -298,18 +312,17 @@ h1 { font-size: clamp(30px, 4vw, 37px); }
 
 /* Let the illustrated world use the viewport instead of sitting inside a card. */
 html, body { width: 100%; min-height: 100%; }
-body { height: 100vh; height: 100dvh; min-height: 0; padding: 0 0 104px; overflow: hidden; }
+body { min-height: 100vh; min-height: 100dvh; padding: 0; overflow-x: hidden; }
 .container {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: none;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: 12px clamp(14px, 3vw, 48px) 8px;
-  overflow: hidden;
+  overflow: visible;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -342,7 +355,12 @@ footer { flex: 0 0 auto; padding-top: 5px; }
 .clinic-art { scale: clamp(1, 1.25, 1.7); transform-origin: bottom center; }
 .traveler { scale: clamp(1, 1.35, 1.8); transform-origin: bottom center; }
 .scene-caption { bottom: 9px; font-size: clamp(9px, 1vw, 13px); }
-.choices { bottom: 12px; }
+.site-footer { display: flex; flex: 0 0 auto; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 16px; padding: 20px 18px; color: #607c83; background: #edf6f6; border-top: 3px solid #c3dfdf; font-size: 12px; }
+.footer-kicker { color: #168a9e; font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+.site-footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 20px; }
+.site-footer a { color: #168a9e; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.site-footer a:hover { color: #0c6474; }
+.site-footer a:focus-visible { outline: 2px solid #ffc907; outline-offset: 3px; border-radius: 2px; }
 
 /* Start and ending views are full-screen scenes, not floating dialog cards. */
 .start-overlay, .pause-overlay, .game-over {
@@ -392,7 +410,6 @@ footer { flex: 0 0 auto; padding-top: 5px; }
 @keyframes fullscreenAppear { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 600px) {
-  body { padding-bottom: 91px; }
   .container { padding: 9px 10px 5px; }
   .topbar { padding-bottom: 7px; }
   .brand-logo { width: clamp(105px, 34vw, 128px); }
@@ -421,7 +438,7 @@ footer { flex: 0 0 auto; padding-top: 5px; }
   .meter-track { height: 7px; }
   .meter-note { font-size: 7px; }
   .trip-status { min-height: 18px; font-size: 9px; }
-  .choices { bottom: 7px; width: calc(100% - 14px); grid-template-columns: 36px minmax(0, 1fr); gap: 5px; padding: 6px; }
+  .choices { width: 100%; grid-template-columns: 36px minmax(0, 1fr); gap: 5px; padding: 6px; }
   .dock-score strong { font-size: 16px; }
   .dock-score small { font-size: 7px; }
   .trip-options { gap: 4px; }
@@ -429,6 +446,7 @@ footer { flex: 0 0 auto; padding-top: 5px; }
   .start-overlay, .pause-overlay, .game-over { padding: 18px; }
   .start-card { padding: 25px 21px; }
   .game-over { justify-items: center; }
+  .site-footer { padding: 8px 0; }
 }
 
 @media (max-height: 650px) {
@@ -439,7 +457,6 @@ footer { flex: 0 0 auto; padding-top: 5px; }
   .dashboard { padding-top: 6px; padding-bottom: 4px; }
   .meter-note { display: none; }
   .trip-status { min-height: 15px; }
-  .choices { bottom: 5px; }
 }
 
 @media (max-width: 370px) {
@@ -447,7 +464,7 @@ footer { flex: 0 0 auto; padding-top: 5px; }
   .destination { transform: scale(.72); }
   .home-destination { top: 14%; }
   .house-art { width: 100px; }
-  .choices { grid-template-columns: 31px minmax(0, 1fr); }
+  .choices { width: 100%; grid-template-columns: 31px minmax(0, 1fr); }
   .trip-card { grid-template-columns: 21px minmax(0, 1fr); }
   .trip-emoji { width: 21px; height: 24px; }
 }
